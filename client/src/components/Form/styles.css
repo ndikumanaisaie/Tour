@@ -1,0 +1,19 @@
+.paper {
+  padding: 12px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-submit {
+  margin-bottom: 10;
+}
+
+.file-input {
+  width: 97%;
+  margin: 10px 0;
+}

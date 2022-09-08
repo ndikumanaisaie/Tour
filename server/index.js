@@ -1,16 +1,31 @@
+
 import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 import cors from 'cors';
-import path from 'path';
+import dotenv from 'dotenv'
 
-import postRoute from './routes/posts.js';
+import postRoutes from './routes/posts.js';
 
+const app = express();
 dotenv.config();
 
+app.use(bodyParser.json({ limit: '30mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
+app.use(cors());
+
+app.use('/posts', postRoutes);
+
 const mongoStr = process.env.DATABASE_URL;
-mongoose.connect(mongoStr);
+
+const PORT = process.env.PORT|| 5000;
+
+mongoose.connect(mongoStr, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+  .catch((error) => console.log(`${error} did not connect`));
+
+mongoose.set('useFindAndModify', false);
+
 const database = mongoose.connection;
 
 database.on('error', (error) => {
@@ -19,24 +34,4 @@ database.on('error', (error) => {
 
 database.on('connected', () => {
 	console.log('Database connected');
-});
-
-const PORT = process.env.PORT || 5000;
-
-const app = express();
-
-app.use(cors());
-
-app.use(bodyParser.json({ limit: '50mb' }));
-
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
-app.use(express.json());
-
-app.use(express.static(path.resolve(process.cwd(), 'dist')));
-
-app.use('/posts', postRoute);
-
-app.listen(PORT, () => {
-	console.log(`Starting server at port ${PORT}`);
 });

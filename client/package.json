@@ -12,9 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "-": "^0.0.1",
     "@mui/material": "^5.10.4",
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
+    "g": "^2.0.1",
     "mdb-react-ui-kit": "^4.2.0",
     "moment": "^2.29.4",
     "mui-chips-input": "^1.1.0",
@@ -26,8 +28,9 @@
     "react-toastify": "^9.0.8"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
+    "@babel/core": "^7.19.0",
+    "@babel/eslint-parser": "^7.18.9",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.26.0",
     "hint": "^6.2.0",

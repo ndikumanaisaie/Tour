@@ -6,7 +6,6 @@
     "node": true,
     "mocha": true
   },
-  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
@@ -24,10 +23,6 @@
     "no-tabs": 0,
     "no-mixed-spaces-and-tabs": 0
   },
-  "ignorePatterns": [
-    "dist/",
-    "build/"
-  ],
   "overrides": [
     {
       "files": ["*.jsx", "*.js"]

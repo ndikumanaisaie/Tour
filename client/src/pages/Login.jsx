@@ -11,6 +11,8 @@ import {
 } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from "react-toastify";
+
 import { login } from '../features/authSlice';
 
 const initialState = {
@@ -26,11 +28,15 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (email && password) {
-      dispatch(login({formValue, navigate}))
+      dispatch(login({formValue, navigate, toast}))
     }
   };
   const onInputChange = (e) => {
@@ -77,6 +83,16 @@ const Login = () => {
             </div>
             <div className='col-12'>
               <MDBBtn style={{ width: '100%'}} className='mt-2'>
+                {
+                  isLoading && (
+                    <MDBSpinner
+                      size='small'
+                      role='status'
+                      tag='span'
+                      className='me-2'
+                    />
+                  )
+                }
                 Login
               </MDBBtn>
             </div>

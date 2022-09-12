@@ -9,7 +9,9 @@ import {
   MDBIcon,
   MDBSpinner,
 } from 'mdb-react-ui-kit';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../features/authSlice';
 
 const initialState = {
   email: '',
@@ -19,8 +21,17 @@ const Login = () => {
   const [formValue, setFormValue] = useState(initialState);
   const { email, password } = formValue;
 
+  const { isLoading, error } = useSelector((state) => ({...state.auth}));
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
+    if (email && password) {
+      dispatch(login({formValue, navigate}))
+    }
   };
   const onInputChange = (e) => {
     let { name, value } = e.target;

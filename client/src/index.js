@@ -8,11 +8,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import './index.css'
 import App from './App.js';
-import postsReducer from './features/posts/postsSlice.js';
+import authReducer from './features/authSlice.js';
 
 const store = configureStore({
 	reducer: {
-		posts: postsReducer,
+		auth: authReducer,
 	},
 });
 const root = createRoot(document.getElementById('root'));

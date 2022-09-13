@@ -13,7 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 
-import { login } from '../features/authSlice';
+import { register } from '../features/authSlice';
 
 const initialState = {
   firstName: '',
@@ -37,9 +37,12 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      return toast.error('Password should match')
+    }
 
-    if (email && password) {
-      dispatch(login({formValue, navigate, toast}))
+    if (email && password && firstName && lastName && confirmPassword) {
+      dispatch(register({formValue, navigate, toast}))
     }
   };
   const onInputChange = (e) => {
@@ -62,7 +65,7 @@ const Register = () => {
         <h5>Register</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'> 
-            <div className='col-md-12'>
+            <div className='col-md-6'>
               <MDBInput 
                 label='firstName'
                 type='firstName'
@@ -73,7 +76,7 @@ const Register = () => {
                 validation="Please provide your first name"
               />
             </div>
-            <div className='col-md-12'>
+            <div className='col-md-6'>
               <MDBInput 
                 label='lastName'
                 type='lastName'
@@ -112,9 +115,9 @@ const Register = () => {
                 type='password'
                 value={confirmPassword}
                 onChange={onInputChange}
-                name='password'
+                name='confirmPassword'
                 required
-                validation="Please provide confirm your password"
+                validation="Please confirm your password"
               />
             </div>
             <div className='col-12'>
@@ -135,8 +138,8 @@ const Register = () => {
           </MDBValidation>
         </MDBCardBody>
         <MDBCardFooter>
-          <Link to='/Register'>
-            <p>Don't have an account? Sign up</p>
+          <Link to='/Login'>
+            <p>Already registered? Login here</p>
           </Link>
         </MDBCardFooter>
       </MDBCard>

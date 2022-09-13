@@ -11,7 +11,8 @@ import {
 } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
+import { GoogleLogin } from 'react-google-login';
 
 import { login } from '../features/authSlice';
 
@@ -42,6 +43,14 @@ const Login = () => {
   const onInputChange = (e) => {
     let { name, value } = e.target;
     setFormValue({...formValue, [name]: value });
+  };
+
+  const googleSuccess = (resp) => {
+    console.log('Success');
+    console.log(resp);
+  };
+  const googleFailure = (error) => {
+    console.log(error);
   };
 
   return (
@@ -97,6 +106,23 @@ const Login = () => {
               </MDBBtn>
             </div>
           </MDBValidation>
+          <br />
+          <GoogleLogin
+            clientId='141620846333-oiepfcs7an6th0f5l1hjddfa6ujfimik.apps.googleusercontent.com'
+            render={(renderProp) => (
+              <MDBBtn
+                style={{width: '100%'}}
+                onClick={renderProp.onClick}
+                disabled={renderProp.disabled}
+                color='danger'
+              >
+                <MDBIcon className='me-2' fab icon='google' /> Login with google
+              </MDBBtn>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy='single_host_origin'
+          />
         </MDBCardBody>
         <MDBCardFooter>
           <Link to='/Register'>

@@ -23,6 +23,17 @@ export const register = createAsyncThunk('auth/register', async({formValue, navi
     return rejectWithValue(error.response.data);
   }
 })
+export const googleSignIn = createAsyncThunk('auth/googleSignIn', async({result, navigate, toast}, {rejectWithValue}) => {
+  try {
+    const response = await api.googleSignIn(result);
+    toast.success('google sign in Successfully!');
+    navigate('/');
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+})
 
 const authSlice = createSlice({
   name: 'auth',
@@ -39,7 +50,7 @@ const authSlice = createSlice({
 			})
 			.addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        localStorage.setItem('prolile', JSON.stringify({...action.payload}));
+        localStorage.setItem('profile', JSON.stringify({...action.payload}));
         state.user = action.payload;
 			})
 			.addCase(login.rejected, (state, action) => {
@@ -51,10 +62,22 @@ const authSlice = createSlice({
 			})
 			.addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
-        localStorage.setItem('prolile', JSON.stringify({...action.payload}));
+        localStorage.setItem('profile', JSON.stringify({...action.payload}));
         state.user = action.payload;
 			})
 			.addCase(register.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
+			})
+			.addCase(googleSignIn.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(googleSignIn.fulfilled, (state, action) => {
+        state.isLoading = false;
+        localStorage.setItem('profile', JSON.stringify({...action.payload}));
+        state.user = action.payload;
+			})
+			.addCase(googleSignIn.rejected, (state, action) => {
 				state.isLoading = false;
         state.error = action.payload.message;
 			});

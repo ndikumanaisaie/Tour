@@ -13,8 +13,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script';
 
-import { login } from '../features/authSlice';
+import { login, googleSignIn } from '../features/authSlice';
 
 const initialState = {
   email: '',
@@ -26,12 +27,24 @@ const Login = () => {
 
   const { isLoading, error } = useSelector((state) => ({...state.auth}));
 
+  const clientId = '141620846333-oiepfcs7an6th0f5l1hjddfa6ujfimik.apps.googleusercontent.com'
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     error && toast.error(error);
   }, [error]);
+
+  useEffect(() => {
+    const initClient = () => {
+          gapi.client.init({
+          clientId: clientId,
+          scope: ''
+        });
+     };
+     gapi.load('client:auth2', initClient);
+ }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,12 +58,18 @@ const Login = () => {
     setFormValue({...formValue, [name]: value });
   };
 
-  const googleSuccess = (resp) => {
-    console.log('Success');
-    console.log(resp);
+  const googleSuccess = (res) => {
+    const email = res?.profileObj?.email;
+    const name = res?.profileObj?.name;
+    const googleId = res?.googleId;
+    const gtoken = res?.tokenId;
+
+    const result = { email, name, googleId, gtoken, };
+
+    dispatch(googleSignIn({ result, navigate, toast }))
   };
   const googleFailure = (error) => {
-    console.log(error);
+    console.log('error:', error);
   };
 
   return (
@@ -108,7 +127,7 @@ const Login = () => {
           </MDBValidation>
           <br />
           <GoogleLogin
-            clientId='141620846333-oiepfcs7an6th0f5l1hjddfa6ujfimik.apps.googleusercontent.com'
+            clientId={clientId}
             render={(renderProp) => (
               <MDBBtn
                 style={{width: '100%'}}
@@ -122,6 +141,7 @@ const Login = () => {
             onSuccess={googleSuccess}
             onFailure={googleFailure}
             cookiePolicy='single_host_origin'
+            isSignedIn={true}
           />
         </MDBCardBody>
         <MDBCardFooter>

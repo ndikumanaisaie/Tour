@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "g": "^2.0.1",
+    "gapi-script": "^1.2.0",
     "mdb-react-ui-kit": "^4.2.0",
     "moment": "^2.29.4",
     "mui-chips-input": "^1.1.0",

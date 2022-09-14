@@ -10,10 +10,18 @@ import {
   MDBCollapse,
   MDBNavbarBrand,
 } from 'mdb-react-ui-kit';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLogout } from '../features/authSlice';
 const Header = () => {
   const [show, setShow] = useState(false);
   const { user } = useSelector((state) => ({ ...state.auth }));
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(setLogout());
+  };
+
   return (
     <MDBNavbar fixed='top' expand='lg' style={{ background: '#f0e6ea' }} >
       <MDBContainer>
@@ -26,7 +34,7 @@ const Header = () => {
         <MDBNavbarToggler
           type='button'
           aria-expanded='false'
-          aria-label='Togle navigation'
+          aria-label='Toggle navigation'
           onClick={() => setShow(!show)}
           style={{ color: '#606080'}}
         >
@@ -34,6 +42,13 @@ const Header = () => {
         </MDBNavbarToggler>
         <MDBCollapse show={show} navbar>
           <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
+            {
+              user?.result?._id && (
+                <h5 style={{ marginRight: '30px', marginTop: '17px' }}>
+                  Logged in as: { user?.result?.name }
+                </h5>
+              )
+            }
             <MDBNavbarItem>
               <MDBNavbarLink href='/'>
               <p className='header-text'>Home</p>
@@ -59,7 +74,7 @@ const Header = () => {
               user?.result?._id ? (
                 <MDBNavbarItem>
                   <MDBNavbarLink href='/Login'>
-                    <p className='header-text'>Logout</p>
+                    <p className='header-text' onClick={ handleLogout }>Logout</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               ) : (

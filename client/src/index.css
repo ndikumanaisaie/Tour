@@ -1,3 +1,10 @@
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
+
+.header-text {
+  color: #606080;
+  font-weight: 500;
+  margin-top: 7px;
+  font-size: 17px;
+}

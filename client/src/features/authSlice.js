@@ -42,7 +42,15 @@ const authSlice = createSlice({
     error: '',
     isLoading: false
   },
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    setLogout: (state, action) => {
+      localStorage.clear();
+      state.user = null;
+    }
+  },
   extraReducers(builder) {
 		builder
 			.addCase(login.pending, (state) => {

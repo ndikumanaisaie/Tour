@@ -9,10 +9,12 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import './index.css'
 import App from './App.js';
 import authReducer from './features/authSlice.js';
+import postReducer from './features/postSlice.js';
 
 const store = configureStore({
 	reducer: {
 		auth: authReducer,
+		post: postReducer,
 	},
 });
 const root = createRoot(document.getElementById('root'));

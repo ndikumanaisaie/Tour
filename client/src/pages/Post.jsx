@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   MDBCard,
   MDBCardBody,
@@ -14,12 +14,12 @@ import ChipInput from 'material-ui-chip-input'
 import FileBase from 'react-file-base64';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../features/postSlice.js';
 
 
 const initialState = {
-  tite: '',
+  title: '',
   description: '',
   tags: [],
 }
@@ -28,10 +28,26 @@ const Post = () => {
   
   const { title, description, tags } = postData;
 
-  const dispatch = useDispatch();
+  const { error, isLoading } = useSelector((state) => ({ ...state.posts }))
+  const { user } = useSelector((state) => ({ ...state.auth }));
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error])
+  
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (title && description && tags) {
+      const updatedPostData = { ...postData, name: user?.result?.name };
+
+      dispatch(createPost({ updatedPostData, navigate, toast }));
+
+      handleClear();
+    }
   };
 
   const onInputChange = (e) => {
@@ -46,7 +62,7 @@ const Post = () => {
   const handleDeleteTag = (deleteTag) => {
     setPostData({
       ...postData, 
-      tags: postData.tags.filter((tag) => tag!== deleteTag),
+      tags: postData.tags.filter((tag) => tag !== deleteTag),
     });
   };
 
@@ -112,7 +128,7 @@ const Post = () => {
                 type='file'
                 multiple={false}
                 onDone={({base64}) => {
-                  setPostData({ ...postData, inputFile: base64 })
+                  setPostData({ ...postData, imageFile: base64 })
                 }}
                 onAdd={(tag) => handleAddTag(tag)}
                 onDelete={(tag) => handleDeleteTag(tag)}

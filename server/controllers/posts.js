@@ -1,4 +1,3 @@
-import express from 'express';
 import mongoose from 'mongoose';
 
 import PostModal from '../models/posts.js';
@@ -26,9 +25,9 @@ export const getPost = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
-    const { title, message, selectedFile, creator, tags } = req.body;
+    const { title, description, imageFile, name, tags } = req.body;
 
-    const newPost = new PostModal({ title, message, selectedFile, creator, tags })
+    const newPost = new PostModal({ title, description, imageFile, name, tags })
 
     try {
         await newPost.save();
@@ -41,11 +40,11 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     const { id } = req.params;
-    const { title, message, creator, selectedFile, tags } = req.body;
+    const { title, description, name, imageFile, tags } = req.body;
     
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+    const updatedPost = { name, title, description, tags, imageFile, _id: id };
 
     await PostModal.findByIdAndUpdate(id, updatedPost, { new: true });
 

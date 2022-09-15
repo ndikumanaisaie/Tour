@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from '../api';
 
-export const createPost = createAsyncThunk('post/createPost', async({postData, navigate, toast}, {rejectWithValue}) => {
+export const createPost = createAsyncThunk('post/createPost', async({ updatedPostData, navigate, toast }, {rejectWithValue}) => {
   try {
-    const response = await api.createPost(postData);
+    const response = await api.createPost(updatedPostData);
     toast.success('Post created Successfully!');
     navigate('/');
     console.log(response.data);

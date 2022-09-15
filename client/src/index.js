@@ -14,7 +14,7 @@ import postReducer from './features/postSlice.js';
 const store = configureStore({
 	reducer: {
 		auth: authReducer,
-		post: postReducer,
+		posts: postReducer,
 	},
 });
 const root = createRoot(document.getElementById('root'));

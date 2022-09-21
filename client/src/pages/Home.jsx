@@ -8,12 +8,11 @@ import { getPosts } from '../features/postSlice';
 
 const Home = () => {
   const { posts, isLoading } = useSelector((state) => ({ ...state.posts}));
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPosts())
-  }, []);
+  }, [dispatch]);
   
   if (isLoading) {
     return <h2>Loading ...</h2>;

@@ -25,9 +25,13 @@ export const getPost = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
-    const { title, description, imageFile, name, tags } = req.body;
+    const posts = req.body;
 
-    const newPost = new PostModal({ title, description, imageFile, name, tags })
+    const newPost = new PostModal({
+        ...posts,
+        creator: req.userId,
+        createdAt: new Date().toISOString,
+    })
 
     try {
         await newPost.save();

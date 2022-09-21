@@ -8,3 +8,17 @@ body {
   margin-top: 7px;
   font-size: 17px;
 }
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+}
+
+.tag-card {
+  margin: 10px 0 0 20px;
+  color: #806078;
+}

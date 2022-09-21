@@ -1,9 +1,23 @@
-import React from 'react';
-import { useSelector, useDipatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MDBRow, MDBCol, MDBTypography, MDBContainer } from 'mdb-react-ui-kit';
 
+import PostCard from '../components/PostCard';
+
+import { getPosts } from '../features/postSlice';
+
 const Home = () => {
-  const { posts, isLoaing } = useSelector((state) => ({ ...state.posts}))
+  const { posts, isLoading } = useSelector((state) => ({ ...state.posts}));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts())
+  }, []);
+  
+  if (isLoading) {
+    return <h2>Loading ...</h2>;
+  }
 
   return (
     <div
@@ -16,8 +30,22 @@ const Home = () => {
     >
       <MDBRow className='mt-5'>
         {
-
+          posts.length === 0 && (
+            <MDBTypography className='text-center mb-0' tag='h2' >
+              No Tours Found
+            </MDBTypography>
+          )
         }
+
+        <MDBCol>
+          <MDBContainer>
+            <MDBRow className='row-cols-md-3 g-2' >
+              {
+                posts && posts.map((post, i) => <PostCard key={i} { ...post } />)
+              }
+            </MDBRow>
+          </MDBContainer>
+        </MDBCol>
       </MDBRow>
     </div>
   )

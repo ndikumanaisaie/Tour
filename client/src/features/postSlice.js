@@ -12,7 +12,7 @@ export const createPost = createAsyncThunk('post/createPost', async({ updatedPos
     return rejectWithValue(error.response.data);
   }
 })
-export const getPosts = createAsyncThunk('post/getPosts', async({ updatedPostData, navigate, toast }, {rejectWithValue}) => {
+export const getPosts = createAsyncThunk('post/getPosts', async({rejectWithValue}) => {
   try {
     const response = await api.getPosts();
     console.log(response.data);
@@ -52,7 +52,7 @@ const authSlice = createSlice({
 			})
 			.addCase(getPosts.rejected, (state, action) => {
 				state.isLoading = false;
-        state.error = action.payload.message;
+        // state.error = action.payload.message;
 			});
 	},
 });

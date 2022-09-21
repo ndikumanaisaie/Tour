@@ -30,7 +30,6 @@ export const createPost = async (req, res) => {
     const newPost = new PostModal({
         ...posts,
         creator: req.userId,
-        createdAt: new Date().toISOString,
     })
 
     try {

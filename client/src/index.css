@@ -22,3 +22,10 @@ body {
   margin: 10px 0 0 20px;
   color: #806078;
 }
+
+.post-name {
+  color: #f48fb1;
+  font-size: 18px;
+  margin: 0 0 0 4px;
+  font-weight: 500;
+}

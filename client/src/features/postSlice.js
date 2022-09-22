@@ -30,12 +30,22 @@ export const getPost = createAsyncThunk('post/getPost', async(id, {rejectWithVal
     return rejectWithValue(error.response.data);
   }
 })
+export const getPostsByUser = createAsyncThunk('post/getPostsByUser', async(userId, {rejectWithValue}) => {
+  try {
+    const response = await api.getPostsByUser(userId);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+})
 
 const authSlice = createSlice({
   name: 'posts',
   initialState: {
     post: {},
     posts: [],
+    userPosts: [],
     error: '',
     isLoading: false
   },
@@ -71,6 +81,17 @@ const authSlice = createSlice({
         state.post = action.payload;
 			})
 			.addCase(getPost.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
+			})
+			.addCase(getPostsByUser.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getPostsByUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userPosts = action.payload;
+			})
+			.addCase(getPostsByUser.rejected, (state, action) => {
 				state.isLoading = false;
         state.error = action.payload.message;
 			});

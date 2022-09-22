@@ -21,3 +21,4 @@ export const googleSignIn = (result) => API.post('/users/googleSignIn', result);
 export const createPost = (postData) => API.post('/posts', postData);
 export const getPosts = () => API.get('/posts');
 export const getPost = (id) => API.get(`/posts/${id}`);
+export const getPostsByUser = (id) => API.get(`/posts/userPosts/${id}`);

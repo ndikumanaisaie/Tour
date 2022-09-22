@@ -75,3 +75,12 @@ export const likePost = async (req, res) => {
     
     res.json(updatedPost);
 }
+export const getPostsByUser = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: `No post with id: ${id}`});
+    
+    const userPosts = await PostModal.find({ creator: id });
+    
+    res.status(200).json(userPosts);
+}

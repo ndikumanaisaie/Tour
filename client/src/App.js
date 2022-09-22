@@ -14,6 +14,7 @@ import Post from './pages/Post';
 import Header from './components/Header';
 import SinglePost from './pages/SinglePost';
 import { setUser } from './features/authSlice';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const App = () => {
 					<Route path='/post' element={ <Post />} />
 					<Route path='/editPost/:id' element={ <Post />} />
 					<Route path='/post/:id' element={ <SinglePost />} />
+					<Route path='/dashboard' element={ <Dashboard />} />
 				</Routes>
 		</div>
 	);

@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Post from './pages/Post';
 import Header from './components/Header';
+import SinglePost from './pages/SinglePost';
 import { setUser } from './features/authSlice';
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
 					<Route path='/register' element={ <Register />} />
 					<Route path='/post' element={ <Post />} />
 					<Route path='/editPost/:id' element={ <Post />} />
+					<Route path='/post/:id' element={ <SinglePost />} />
 				</Routes>
 		</div>
 	);

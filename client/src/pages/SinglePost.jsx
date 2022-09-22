@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import {
   MDBCard, 
   MDBCardBody,
-  MDBCardTitle,
   MDBCardText,
   MDBCardImage,
   MDBContainer,
   MDBIcon,
+  MDBSpinner,
 } from 'mdb-react-ui-kit';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
@@ -15,15 +16,24 @@ import { getPost } from '../features/postSlice';
 
 const SinglePost = () => {
   const dispatch = useDispatch();
-  const { post } = useSelector((state) => ({ ...state.posts}));
+  const { post, isLoading } = useSelector((state) => ({ ...state.posts}));
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
       dispatch(getPost(id));
     }
-  }, [id])
+  }, [id, dispatch])
   
+  if (isLoading) {
+    return (
+      <div style={{ marginTop: '100px'}} className='text-center'>
+        <MDBSpinner role='status'>
+          <span className='visually-hidden'>Loading...</span>
+        </MDBSpinner>
+      </div>
+    );
+  }
 
   return (
     <MDBContainer>
@@ -42,7 +52,7 @@ const SinglePost = () => {
           <div style={{ float: 'left' }}>
             <span className='text-start'>
               {
-                post && post.tags && tags.map((tag) => `#${post} `)
+                post && post.tags && post.tags.map((tag) => `#${tag} `)
               }
             </span>
           </div>

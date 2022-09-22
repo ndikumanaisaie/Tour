@@ -40,7 +40,7 @@ const PostCard = ({ imageFile, description, title, tags, _id, name }) => {
               {
                 excerpt(description)
               }
-              <Link to={`/tour/${_id}`}>Read More</Link>
+              <Link to={`/post/${_id}`}>Read More</Link>
             </MDBCardText>
           </MDBCardBody>
       </MDBCard>

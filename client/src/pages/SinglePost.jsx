@@ -58,6 +58,11 @@ const SinglePost = () => {
               {moment(post.createdAt).fromNow()}
             </small>
           </MDBCardText>
+          <MDBCardText className='lead mb-0 text-start'>
+            {
+              post.description
+            }
+          </MDBCardText>
         </MDBCardBody>
       </MDBCard>
     </MDBContainer>

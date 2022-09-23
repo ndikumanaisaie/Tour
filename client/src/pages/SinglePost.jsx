@@ -12,6 +12,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
+
+import Spinner from '../components/Spinner';
 import { getPost } from '../features/postSlice';
 
 const SinglePost = () => {
@@ -26,13 +28,7 @@ const SinglePost = () => {
   }, [id, dispatch])
   
   if (isLoading) {
-    return (
-      <div style={{ marginTop: '100px'}} className='text-center'>
-        <MDBSpinner role='status'>
-          <span className='visually-hidden'>Loading...</span>
-        </MDBSpinner>
-      </div>
-    );
+    return <Spinner />
   }
 
   return (

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MDBRow, MDBCol, MDBTypography, MDBContainer, MDBSpinner } from 'mdb-react-ui-kit';
+import { MDBRow, MDBCol, MDBTypography, MDBContainer } from 'mdb-react-ui-kit';
 
 import PostCard from '../components/PostCard';
+import Spinner from '../components/Spinner';
 
 import { getPosts } from '../features/postSlice';
 
@@ -16,11 +17,7 @@ const Home = () => {
   
   if (isLoading) {
     return (
-      <div style={{ marginTop: '100px'}} className='text-center'>
-        <MDBSpinner role='status'>
-          <span className='visually-hidden'>Loading...</span>
-        </MDBSpinner>
-      </div>
+      <Spinner />
     );
   }
 

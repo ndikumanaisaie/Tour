@@ -11,6 +11,6 @@ postRouter.get('/:id', getPost);
 postRouter.patch('/:id', updatePost);
 postRouter.delete('/:id', deletePost);
 postRouter.patch('/:id/likePost', likePost);
-postRouter.patch('/userPosts/:userId', auth, getPostsByUser);
+postRouter.get('/userPosts/:userId', auth, getPostsByUser);
 
 export default postRouter;

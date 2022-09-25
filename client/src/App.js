@@ -15,6 +15,7 @@ import Header from './components/Header';
 import SinglePost from './pages/SinglePost';
 import { setUser } from './features/authSlice';
 import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -31,10 +32,28 @@ const App = () => {
 					<Route path='/' element={ <Home />} />
 					<Route path='/login' element={ <Login />} />
 					<Route path='/register' element={ <Register />} />
-					<Route path='/post' element={ <Post />} />
-					<Route path='/editPost/:id' element={ <Post />} />
+					<Route 
+						path='/post' 
+						element={
+							<PrivateRoute>
+								<Post />
+							</PrivateRoute> 
+					} />
+					<Route 
+						path='/editPost/:id' 
+						element={
+							<PrivateRoute>
+								<Post />
+							</PrivateRoute> 
+						} />
 					<Route path='/post/:id' element={ <SinglePost />} />
-					<Route path='/dashboard' element={ <Dashboard />} />
+					<Route 
+						path='/dashboard' 
+						element={
+							<PrivateRoute>
+								<Dashboard />
+							</PrivateRoute> 
+						} />
 				</Routes>
 		</div>
 	);

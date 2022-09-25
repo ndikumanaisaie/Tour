@@ -14,11 +14,13 @@ import {
 } from 'mdb-react-ui-kit';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 import Spinner from '../components/Spinner';
 
-import { getPostsByUser } from '../features/postSlice';
+import { getPostsByUser, deletePost } from '../features/postSlice';
+
 
 const Dashboard = () => {
   const { user } = useSelector((state) => ({ ...state.auth }));
@@ -43,6 +45,12 @@ const Dashboard = () => {
       <Spinner />
     );
   }
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this post?')){
+      dispatch(deletePost({ id, toast }));
+    }
+  };
 
   return (
     <div
@@ -96,6 +104,7 @@ const Dashboard = () => {
                           icon='trash'
                           style={{ color: '#dd4b39' }}
                           size='lg'
+                          onClick={() => handleDelete(userPost._id)}
                         />
                       </MDBBtn>
                       <Link to={`/editPost/${userPost._id}`}>

@@ -11,7 +11,8 @@ export const createPost = createAsyncThunk('post/createPost', async({ updatedPos
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
-})
+});
+
 export const getPosts = createAsyncThunk('post/getPosts', async(_, {rejectWithValue}) => {
   try {
     const response = await api.getPosts();
@@ -20,7 +21,8 @@ export const getPosts = createAsyncThunk('post/getPosts', async(_, {rejectWithVa
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
-})
+});
+
 export const getPost = createAsyncThunk('post/getPost', async(id, {rejectWithValue}) => {
   try {
     const response = await api.getPost(id);
@@ -29,7 +31,19 @@ export const getPost = createAsyncThunk('post/getPost', async(id, {rejectWithVal
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
-})
+});
+
+export const deletePost = createAsyncThunk('post/deletePost', async({id, toast}, {rejectWithValue}) => {
+  try {
+    const response = await api.deletePost(id);
+    toast.success('Post deleted Successfully!');
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
 export const getPostsByUser = createAsyncThunk('post/getPostsByUser', async(userId, {rejectWithValue}) => {
   try {
     const response = await api.getPostsByUser(userId);
@@ -38,7 +52,7 @@ export const getPostsByUser = createAsyncThunk('post/getPostsByUser', async(user
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
-})
+});
 
 const authSlice = createSlice({
   name: 'posts',
@@ -92,6 +106,22 @@ const authSlice = createSlice({
         state.userPosts = action.payload;
 			})
 			.addCase(getPostsByUser.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
+			})
+			.addCase(deletePost.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(deletePost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log('action', action);
+        const { arg : { id } } = action.meta;
+        if (id) {
+          state.userPosts = state.userPosts.filter((userPost) => userPost._id !== id);
+          state.posts = state.userPosts.filter((post) => post._id !== id);
+        }
+			})
+			.addCase(deletePost.rejected, (state, action) => {
 				state.isLoading = false;
         state.error = action.payload.message;
 			});

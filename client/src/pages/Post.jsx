@@ -69,6 +69,7 @@ const Post = () => {
   };
 
   const handleAddTag = (tag) => {
+    setTagErrMsg(null);
     setPostData({ ...postData, tags: [...postData.tags, tag] });
   };
 

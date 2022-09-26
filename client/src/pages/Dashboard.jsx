@@ -5,7 +5,6 @@ import {
   MDBCardText,
   MDBCardImage,
   MDBIcon,
-  MDBSpinner,
   MDBCardTitle,
   MDBRow,
   MDBCol,

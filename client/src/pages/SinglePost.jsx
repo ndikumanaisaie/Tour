@@ -6,7 +6,6 @@ import {
   MDBCardImage,
   MDBContainer,
   MDBIcon,
-  MDBSpinner,
 } from 'mdb-react-ui-kit';
 
 import { useDispatch, useSelector } from 'react-redux';

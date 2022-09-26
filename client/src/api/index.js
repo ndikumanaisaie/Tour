@@ -22,5 +22,5 @@ export const createPost = (postData) => API.post('/posts', postData);
 export const getPosts = () => API.get('/posts');
 export const getPost = (id) => API.get(`/posts/${id}`);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
-export const updatePost = (id, updatedData) => API.patch(`/posts/${id}`, updatedData);
+export const updatePost = (updatedPostData, id) => API.patch(`/posts/${id}`, updatedPostData);
 export const getPostsByUser = (userId) => API.get(`/posts/userPosts/${userId}`);

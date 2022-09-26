@@ -3,19 +3,16 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBCardFooter,
   MDBValidation,
   MDBBtn,
-  MDBIcon,
-  MDBSpinner,
 } from 'mdb-react-ui-kit';
 
 import ChipInput from 'material-ui-chip-input'
 import FileBase from 'react-file-base64';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost } from '../features/postSlice.js';
+import { createPost, updatePost } from '../features/postSlice.js';
 
 
 const initialState = {
@@ -25,14 +22,24 @@ const initialState = {
 }
 const Post = () => {
   const [postData, setPostData] = useState(initialState);
+  const [tagErrMsg, setTagErrMsg] = useState(null);
   
   const { title, description, tags } = postData;
+  const { id } = useParams();
 
-  const { error, isLoading } = useSelector((state) => ({ ...state.posts }))
+  const { error, userPosts } = useSelector((state) => ({ ...state.posts }))
   const { user } = useSelector((state) => ({ ...state.auth }));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      const postToEdit = userPosts.find((userPost) => userPost._id === id);
+      setPostData({ ...postToEdit });
+    }
+  }, [id, userPosts]);
+  
 
   useEffect(() => {
     error && toast.error(error);
@@ -41,10 +48,16 @@ const Post = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!tags.length) setTagErrMsg('Please provide some tags');
+
     if (title && description && tags) {
       const updatedPostData = { ...postData, name: user?.result?.name };
 
-      dispatch(createPost({ updatedPostData, navigate, toast }));
+      if (!id) {
+        dispatch(createPost({ updatedPostData, navigate, toast }));
+      } else {
+        dispatch(updatePost({ id, updatedPostData, toast, navigate }));
+      }
 
       handleClear();
     }
@@ -85,11 +98,11 @@ const Post = () => {
       }}
     >
       <MDBCard alignment='center'>
-        <h5> Add Post</h5>
+        <h5>{ id ? 'Update Post': 'Add New Post'}</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'> 
             <div className='col-md-12'>
-              <input 
+              <MDBInput 
                 type='text'
                 placeholder='Enter title'
                 value={title}
@@ -122,6 +135,11 @@ const Post = () => {
                 onAdd={(tag) => handleAddTag(tag)}
                 onDelete={(tag) => handleDeleteTag(tag)}
               />
+              {
+                tagErrMsg && (
+                  <div className="tagErrMsg">{tagErrMsg}</div>
+                )
+              }
             </div>
             <div className='d-flex justify-content-start'>
               <FileBase
@@ -135,7 +153,7 @@ const Post = () => {
               />
             </div>
             <div className='col-md-12'>
-              <MDBBtn style={{ width: '100%'}}>Submit</MDBBtn>
+              <MDBBtn style={{ width: '100%'}}>{ id ? 'Update': 'Submit'}</MDBBtn>
               <MDBBtn 
                 style={{ width: '100%'}}
                 className='mt-2'

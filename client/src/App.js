@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { ToastContainer } from 'react-toastify';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +15,7 @@ import SinglePost from './pages/SinglePost';
 import { setUser } from './features/authSlice';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import NotFound from './pages/NotFound';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -54,6 +54,7 @@ const App = () => {
 								<Dashboard />
 							</PrivateRoute> 
 						} />
+					<Route path='*' element={<NotFound />}/>
 				</Routes>
 		</div>
 	);

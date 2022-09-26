@@ -33,6 +33,16 @@ export const getPost = createAsyncThunk('post/getPost', async(id, {rejectWithVal
   }
 });
 
+export const getPostsByUser = createAsyncThunk('post/getPostsByUser', async(userId, {rejectWithValue}) => {
+  try {
+    const response = await api.getPostsByUser(userId);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
 export const deletePost = createAsyncThunk('post/deletePost', async({id, toast}, {rejectWithValue}) => {
   try {
     const response = await api.deletePost(id);
@@ -44,15 +54,18 @@ export const deletePost = createAsyncThunk('post/deletePost', async({id, toast},
   }
 });
 
-export const getPostsByUser = createAsyncThunk('post/getPostsByUser', async(userId, {rejectWithValue}) => {
+export const updatePost = createAsyncThunk('post/updatePost', async({id, updatedPostData, toast, navigate}, {rejectWithValue}) => {
   try {
-    const response = await api.getPostsByUser(userId);
+    const response = await api.updatePost(updatedPostData, id);
+    toast.success('Post updated Successfully!');
+    navigate('/');
     console.log(response.data);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
 });
+
 
 const authSlice = createSlice({
   name: 'posts',
@@ -118,10 +131,26 @@ const authSlice = createSlice({
         const { arg : { id } } = action.meta;
         if (id) {
           state.userPosts = state.userPosts.filter((userPost) => userPost._id !== id);
-          state.posts = state.userPosts.filter((post) => post._id !== id);
+          state.posts = state.posts.filter((post) => post._id !== id);
         }
 			})
 			.addCase(deletePost.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
+			})
+			.addCase(updatePost.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(updatePost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log('action', action);
+        const { arg : { id } } = action.meta;
+        if (id) {
+          state.userPosts = state.userPosts.map((userPost) => userPost._id === id ? action.payload: userPost);
+          state.posts = state.posts.map((post) => post._id === id ? action.payload: post);
+        }
+			})
+			.addCase(updatePost.rejected, (state, action) => {
 				state.isLoading = false;
         state.error = action.payload.message;
 			});

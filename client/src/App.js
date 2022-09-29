@@ -30,6 +30,7 @@ const App = () => {
 			<ToastContainer />
 				<Routes>
 					<Route path='/' element={ <Home />} />
+					<Route path='/posts/search' element={ <Home />} />
 					<Route path='/login' element={ <Login />} />
 					<Route path='/register' element={ <Register />} />
 					<Route 

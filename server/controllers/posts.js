@@ -93,3 +93,14 @@ export const getPostsByUser = async (req, res) => {
     
     res.status(200).json(userPosts);
 }
+
+export const getPostsBySearch = async(req, res) => {
+    const { searchQuery } = req.query;
+    try {
+        const title = new RegExp(searchQuery, 'i');
+        const posts = await PostModal.find({ title });
+        res.json(posts);
+    } catch (error) {
+        res.status(404).json({ message: 'This post does not exist in the database' });
+    }
+}

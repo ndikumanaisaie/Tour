@@ -33,16 +33,6 @@ export const getPost = createAsyncThunk('post/getPost', async(id, {rejectWithVal
   }
 });
 
-export const getPostsByUser = createAsyncThunk('post/getPostsByUser', async(userId, {rejectWithValue}) => {
-  try {
-    const response = await api.getPostsByUser(userId);
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
 export const deletePost = createAsyncThunk('post/deletePost', async({id, toast}, {rejectWithValue}) => {
   try {
     const response = await api.deletePost(id);
@@ -66,6 +56,24 @@ export const updatePost = createAsyncThunk('post/updatePost', async({id, updated
   }
 });
 
+export const getPostsByUser = createAsyncThunk('post/getPostsByUser', async(userId, {rejectWithValue}) => {
+  try {
+    const response = await api.getPostsByUser(userId);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const getPostsBySearch = createAsyncThunk('post/getPostBySearch', async(search, {rejectWithValue}) => {
+  try {
+    const response = await api.getPostsBySearch(search);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
 
 const authSlice = createSlice({
   name: 'posts',
@@ -153,6 +161,17 @@ const authSlice = createSlice({
 			.addCase(updatePost.rejected, (state, action) => {
 				state.isLoading = false;
         state.error = action.payload.message;
+			})
+      .addCase(getPostsBySearch.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
+			})
+			.addCase(getPostsBySearch.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getPostsBySearch.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.post = action.payload;
 			});
 	},
 });

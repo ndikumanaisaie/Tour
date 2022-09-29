@@ -10,17 +10,34 @@ import {
   MDBCollapse,
   MDBNavbarBrand,
 } from 'mdb-react-ui-kit';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { setLogout } from '../features/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { getPostsBySearch } from '../features/postSlice';
+
 const Header = () => {
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState('');
   const { user } = useSelector((state) => ({ ...state.auth }));
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(setLogout());
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (search) {
+      dispatch(getPostsBySearch(search));
+      navigate(`/posts/search?searchQuery=${search}`);
+      setSearch('');
+    } else {
+      navigate('/');
+    }
+  }
 
   return (
     <MDBNavbar fixed='top' expand='lg' style={{ background: '#f0e6ea' }} >
@@ -44,7 +61,7 @@ const Header = () => {
           <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
             {
               user?.result?._id && (
-                <h5 style={{ marginRight: '30px', marginTop: '17px' }}>
+                <h5 style={{ marginRight: '30px', marginTop: '27px' }}>
                   Logged in as: { user?.result?.name }
                 </h5>
               )
@@ -86,6 +103,18 @@ const Header = () => {
               )
             }
           </MDBNavbarNav>
+          <form className='d-flex input-group w-auto' onSubmit={handleSubmit}>
+            <input
+              className='form-control'
+              type='text'
+              placeholder='search post'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div style={{ marginTop: '5px', marginLeft: '5px' }}>
+              <MDBIcon fas icon='search' />
+            </div>
+          </form>
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>

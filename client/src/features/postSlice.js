@@ -75,9 +75,10 @@ export const getPostsBySearch = createAsyncThunk('post/getPostBySearch', async(s
     return rejectWithValue(error.response.data);
   }
 });
-export const getPostsByTags = createAsyncThunk('post/getPostBySearch', async(search, {rejectWithValue}) => {
+
+export const getPostsByTag = createAsyncThunk('post/getPostByTag', async(tag, {rejectWithValue}) => {
   try {
-    const response = await api.getPostsBySearch(search);
+    const response = await api.getPostsByTag(tag);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -92,6 +93,7 @@ const authSlice = createSlice({
     post: {},
     posts: [],
     userPosts: [],
+    tagPosts: [],
     error: '',
     isLoading: false
   },
@@ -183,6 +185,17 @@ const authSlice = createSlice({
 			.addCase(getPostsBySearch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.posts = action.payload;
+			})
+      .addCase(getPostsByTag.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
+			})
+			.addCase(getPostsByTag.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getPostsByTag.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tagPosts = action.payload;
 			});
 	},
 });

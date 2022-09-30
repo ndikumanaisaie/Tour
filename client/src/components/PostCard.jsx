@@ -9,14 +9,9 @@ import {
 } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 
+import excerpt from '../utilities/index.js'
+
 const PostCard = ({ imageFile, description, title, tags, _id, name }) => {
-  
-  const excerpt = (str) => {
-    if (str.length > 45){
-      str = str.substring(0, 45) + '...';
-    }
-    return str;
-  }
 
   return (
     <MDBCardGroup>
@@ -30,7 +25,9 @@ const PostCard = ({ imageFile, description, title, tags, _id, name }) => {
           <div className='top-left'>{name}</div>
           <span className='text-start tag-card'>
             {
-              tags.map((tag) => `#${tag} `)
+              tags.map((tag, i) => (
+                <Link key={i} to={`/post/tag/${tag}`}> #{tag}</Link>
+              ))
             }
           </span>
 
@@ -38,7 +35,7 @@ const PostCard = ({ imageFile, description, title, tags, _id, name }) => {
             <MDBCardTitle className='text-start'>{title}</MDBCardTitle>
             <MDBCardText className='text-start'>
               {
-                excerpt(description)
+                excerpt(description, 100)
               }
               <Link to={`/post/${_id}`}>Read More</Link>
             </MDBCardText>

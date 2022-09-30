@@ -9,7 +9,7 @@ import {
 } from 'mdb-react-ui-kit';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import moment from 'moment';
 
 import Spinner from '../components/Spinner';
@@ -47,7 +47,9 @@ const SinglePost = () => {
           <div style={{ float: 'left' }}>
             <span className='text-start'>
               {
-                post && post.tags && post.tags.map((tag) => `#${tag} `)
+                post && post.tags && post.tags.map((tag, i) => (
+                  <Link key={i} to={`/post/tag/${tag}`}> #{tag}</Link>
+                ))
               }
             </span>
           </div>

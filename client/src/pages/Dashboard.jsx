@@ -18,6 +18,8 @@ import { toast } from 'react-toastify'
 
 import Spinner from '../components/Spinner';
 
+import excerpt from '../utilities/index.js'
+
 import { getPostsByUser, deletePost } from '../features/postSlice';
 
 
@@ -32,13 +34,6 @@ const Dashboard = () => {
     if (userId) dispatch(getPostsByUser(userId));
   }, [userId, dispatch]);
 
-  const excerpt = (str) => {
-    if (str.length > 45){
-      str = str.substring(0, 45) + '...';
-    }
-    return str;
-  }
-  
   if (isLoading) {
     return (
       <Spinner />
@@ -86,7 +81,7 @@ const Dashboard = () => {
                     <MDBCardText className='text-start'>
                       <small className='text-muted'>
                         {
-                          excerpt(userPost.description)
+                          excerpt(userPost.description, 50)
                         }
                       </small>
                     </MDBCardText>

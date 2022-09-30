@@ -25,3 +25,4 @@ export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const updatePost = (updatedPostData, id) => API.patch(`/posts/${id}`, updatedPostData);
 export const getPostsByUser = (userId) => API.get(`/posts/userPosts/${userId}`);
 export const getPostsBySearch = (search) => API.get(`/posts/search?searchQuery=${search}`);
+export const getPostsByTag = (tag) => API.get(`/posts/tag/${tag}`);

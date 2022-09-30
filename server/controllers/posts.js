@@ -105,10 +105,9 @@ export const getPostsBySearch = async (req, res) => {
     }
 }
 export const getPostsByTag = async (req, res) => {
-    const { searchQuery } = req.query;
+    const { tag } = req.params;
     try {
-        const title = new RegExp(searchQuery, 'i');
-        const posts = await PostModal.find({ title });
+        const posts = await PostModal.find({ tags: { $in: tag } });
         res.json(posts);
     } catch (error) {
         res.status(404).json({ message: 'This post does not exist in the database' });

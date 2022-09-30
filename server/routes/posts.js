@@ -14,9 +14,9 @@ import auth from '../middleware/auth.js';
 
 const postRouter = express.Router();
 
+postRouter.get('/search', getPostsBySearch);
 postRouter.get('/', getPosts);
 postRouter.get('/:id', getPost);
-postRouter.get('/search', getPostsBySearch);
 postRouter.patch('/:id/likePost', likePost);
 
 postRouter.post('/', auth, createPost);

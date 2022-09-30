@@ -10,7 +10,6 @@ import { getPosts } from '../features/postSlice';
 const Home = () => {
   const { posts, isLoading } = useSelector((state) => ({ ...state.posts}));
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getPosts())
   }, [dispatch]);
@@ -43,7 +42,7 @@ const Home = () => {
           <MDBContainer>
             <MDBRow className='row-cols-md-3 g-2' >
               {
-                posts && posts.map((post, i) => <PostCard key={i} { ...post } />)
+                posts && posts?.map((post, i) => <PostCard key={i} { ...post } />)
               }
             </MDBRow>
           </MDBContainer>

@@ -32,7 +32,7 @@ const Header = () => {
     e.preventDefault();
     if (search) {
       dispatch(getPostsBySearch(search));
-      navigate(`/posts/search?searchQuery=${search}`);
+      navigate(`/post/search?searchQuery=${search}`);
       setSearch('');
     } else {
       navigate('/');

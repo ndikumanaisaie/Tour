@@ -26,3 +26,4 @@ export const updatePost = (updatedPostData, id) => API.patch(`/posts/${id}`, upd
 export const getPostsByUser = (userId) => API.get(`/posts/userPosts/${userId}`);
 export const getPostsBySearch = (search) => API.get(`/posts/search?searchQuery=${search}`);
 export const getPostsByTag = (tag) => API.get(`/posts/tag/${tag}`);
+export const getRelatedPosts = (tags) => API.post('/posts/ralatedPosts', tags);

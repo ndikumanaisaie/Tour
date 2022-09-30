@@ -86,6 +86,16 @@ export const getPostsByTag = createAsyncThunk('post/getPostByTag', async(tag, {r
   }
 });
 
+export const getRelatedPosts = createAsyncThunk('post/getRelatedPosts', async(tags, {rejectWithValue}) => {
+  try {
+    const response = await api.getRelatedPosts(tags);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
 
 const authSlice = createSlice({
   name: 'posts',
@@ -94,6 +104,7 @@ const authSlice = createSlice({
     posts: [],
     userPosts: [],
     tagPosts: [],
+    relatedPosts: [],
     error: '',
     isLoading: false
   },
@@ -196,6 +207,17 @@ const authSlice = createSlice({
 			.addCase(getPostsByTag.fulfilled, (state, action) => {
         state.isLoading = false;
         state.tagPosts = action.payload;
+			})
+      .addCase(getRelatedPosts.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
+			})
+			.addCase(getRelatedPosts.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getRelatedPosts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.relatedPosts = action.payload;
 			});
 	},
 });

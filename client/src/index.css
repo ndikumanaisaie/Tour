@@ -36,3 +36,29 @@ body {
   text-align: left;
   font-size: 16px;
 }
+
+h4 {
+  overflow: hidden;
+  text-align: center;
+}
+
+h4::after,
+h4::before {
+  background-color: #000;
+  content: '';
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+h4::before {
+  right: 0.5rem;
+  margin-left: -50%;
+}
+
+h4::after {
+  left: 0.5rem;
+  margin-right: -50%;
+}

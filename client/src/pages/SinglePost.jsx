@@ -11,23 +11,32 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import moment from 'moment';
+import RelatedPosts from '../components/RelatedPosts';
 
 import Spinner from '../components/Spinner';
-import { getPost } from '../features/postSlice';
+import { getPost, getRelatedPosts } from '../features/postSlice';
 
 const SinglePost = () => {
   const dispatch = useDispatch();
-  const { post, isLoading } = useSelector((state) => ({ ...state.posts}));
+  const { post, relatedPosts, isLoading } = useSelector((state) => ({ ...state.posts}));
   const { id } = useParams();
+
+  const tags = post?.tags;
+
+  useEffect(() => {
+    if (tags) {
+      dispatch(getRelatedPosts(tags));
+    }
+  }, [tags, dispatch]);
 
   useEffect(() => {
     if (id) {
       dispatch(getPost(id));
     }
-  }, [id, dispatch])
+  }, [id, dispatch]);
   
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   return (
@@ -71,6 +80,8 @@ const SinglePost = () => {
             }
           </MDBCardText>
         </MDBCardBody>
+        {/* Related posts */}
+        <RelatedPosts relatedPosts={relatedPosts} postId={id} />
       </MDBCard>
     </MDBContainer>
   )

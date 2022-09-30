@@ -18,7 +18,7 @@ const postRouter = express.Router();
 
 postRouter.get('/search', getPostsBySearch);
 postRouter.get('/tag/:tag', getPostsByTag);
-postRouter.get('/ralatedPosts', getRelatedPosts);
+postRouter.post('/ralatedPosts', getRelatedPosts);
 postRouter.get('/', getPosts);
 postRouter.get('/:id', getPost);
 postRouter.patch('/:id/likePost', likePost);

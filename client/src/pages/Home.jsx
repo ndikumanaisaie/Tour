@@ -5,10 +5,11 @@ import { MDBRow, MDBCol, MDBTypography, MDBContainer } from 'mdb-react-ui-kit';
 import PostCard from '../components/PostCard';
 import Spinner from '../components/Spinner';
 
-import { getPosts } from '../features/postSlice';
+import { getPosts, setCurrentPage } from '../features/postSlice';
+import Pagination from '../components/Pagination';
 
 const Home = () => {
-  const { posts, isLoading, currentPage } = useSelector((state) => ({ ...state.posts}));
+  const { posts, isLoading, currentPage, numberOfPages } = useSelector((state) => ({ ...state.posts}));
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts(currentPage));
@@ -48,6 +49,12 @@ const Home = () => {
           </MDBContainer>
         </MDBCol>
       </MDBRow>
+      <Pagination 
+        setCurrentPage={setCurrentPage}
+        numberOfPages={numberOfPages}
+        currentPage={currentPage}
+        dispatch={dispatch}
+      />
     </div>
   )
 }

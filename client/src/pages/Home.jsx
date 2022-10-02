@@ -8,11 +8,11 @@ import Spinner from '../components/Spinner';
 import { getPosts } from '../features/postSlice';
 
 const Home = () => {
-  const { posts, isLoading } = useSelector((state) => ({ ...state.posts}));
+  const { posts, isLoading, currentPage } = useSelector((state) => ({ ...state.posts}));
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPosts())
-  }, [dispatch]);
+    dispatch(getPosts(currentPage));
+  }, [dispatch, currentPage]);
   
   if (isLoading) {
     return (

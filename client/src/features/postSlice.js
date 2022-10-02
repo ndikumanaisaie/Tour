@@ -13,9 +13,9 @@ export const createPost = createAsyncThunk('post/createPost', async({ updatedPos
   }
 });
 
-export const getPosts = createAsyncThunk('post/getPosts', async(_, {rejectWithValue}) => {
+export const getPosts = createAsyncThunk('post/getPosts', async(page, {rejectWithValue}) => {
   try {
-    const response = await api.getPosts();
+    const response = await api.getPosts(page);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -97,7 +97,7 @@ export const getRelatedPosts = createAsyncThunk('post/getRelatedPosts', async(ta
 });
 
 
-const authSlice = createSlice({
+const postSlice = createSlice({
   name: 'posts',
   initialState: {
     post: {},
@@ -105,8 +105,15 @@ const authSlice = createSlice({
     userPosts: [],
     tagPosts: [],
     relatedPosts: [],
+    currentPage: 1,
+    numberOfPages: null,
     error: '',
     isLoading: false
+  },
+  reducers:{
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers(builder) {
 		builder
@@ -126,7 +133,9 @@ const authSlice = createSlice({
 			})
 			.addCase(getPosts.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.posts = action.payload;
+        state.posts = action.payload.data;
+        state.numberOfPages = action.payload.numberOfPages;
+        state.currentPage = action.payload.currentPage;
 			})
 			.addCase(getPosts.rejected, (state, action) => {
 				state.isLoading = false;
@@ -222,4 +231,6 @@ const authSlice = createSlice({
 	},
 });
 
-export default authSlice.reducer;
+export const { setCurrentPage } = postSlice.actions;
+
+export default postSlice.reducer;

@@ -3,10 +3,20 @@ import mongoose from 'mongoose';
 import PostModal from '../models/posts.js';
 
 export const getPosts = async (req, res) => { 
+    const { page } = req.query;
     try {
-        const posts = await PostModal.find();
-                
-        res.status(200).json(posts);
+        // const posts = await PostModal.find();   
+        // res.status(200).json(posts);
+        const limit = 6;
+        const startIndex = (Number(page) -1) * limit;
+        const total = await PostModal.countDocuments({});
+        const posts = await PostModal.find().limit(limit).skip(startIndex);
+        res.json({
+            data: posts,
+            currentPage: Number(page),
+            totalPosts: total,
+            numberOfPages: Math.ceil(total/limit),
+        })
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

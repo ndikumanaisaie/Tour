@@ -19,7 +19,7 @@ export const signUp = (formData) => API.post('/users/signup', formData);
 export const googleSignIn = (result) => API.post('/users/googleSignIn', result);
 
 export const createPost = (postData) => API.post('/posts', postData);
-export const getPosts = () => API.get('/posts');
+export const getPosts = (page) => API.get(`/posts?page=${page}`);
 export const getPost = (id) => API.get(`/posts/${id}`);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const updatePost = (updatedPostData, id) => API.patch(`/posts/${id}`, updatedPostData);

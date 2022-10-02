@@ -12,6 +12,7 @@ import {
 } from 'mdb-react-ui-kit';
 
 import { useSelector, useDispatch } from 'react-redux';
+import decode from 'jwt-decode';
 import { setLogout } from '../features/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { getPostsBySearch } from '../features/postSlice';
@@ -21,8 +22,16 @@ const Header = () => {
   const [search, setSearch] = useState('');
   const { user } = useSelector((state) => ({ ...state.auth }));
 
+  const token = user?.token
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  if (token) {
+    const decodedToken = decode(token);
+    if (decodedToken.exp * 1000 < new Date().getTime()) {
+      dispatch(setLogout());
+    }
+  }
 
   const handleLogout = () => {
     dispatch(setLogout());

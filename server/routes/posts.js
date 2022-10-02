@@ -21,7 +21,7 @@ postRouter.get('/tag/:tag', getPostsByTag);
 postRouter.post('/ralatedPosts', getRelatedPosts);
 postRouter.get('/', getPosts);
 postRouter.get('/:id', getPost);
-postRouter.patch('/:id/likePost', likePost);
+postRouter.patch('/like/:id', auth, likePost);
 
 postRouter.post('/', auth, createPost);
 postRouter.patch('/:id', auth, updatePost);

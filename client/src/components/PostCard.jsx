@@ -83,7 +83,7 @@ const PostCard = ({ imageFile, description, title, tags, _id, name, likes }) => 
             >
               {
                 !user?.result ? (
-                  <MDBTooltip title='Please login to like a post' tag='a'>
+                  <MDBTooltip title='Please login to like this post' tag='a'>
                     <Likes />
                   </MDBTooltip>
                 ) : (

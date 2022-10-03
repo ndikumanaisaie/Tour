@@ -23,6 +23,7 @@
     "mdb-react-ui-kit": "^4.2.0",
     "moment": "^2.29.4",
     "mui-chips-input": "^1.1.0",
+    "prop-types": "^15.8.1",
     "react-file-base64": "^1.0.3",
     "react-google-login": "^5.2.2",
     "react-redux": "^8.0.2",

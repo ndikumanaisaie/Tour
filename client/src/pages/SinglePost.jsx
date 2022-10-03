@@ -15,6 +15,7 @@ import RelatedPosts from '../components/RelatedPosts';
 
 import Spinner from '../components/Spinner';
 import { getPost, getRelatedPosts } from '../features/postSlice';
+import DisqusThread from '../components/DisqusThread';
 
 const SinglePost = () => {
   const dispatch = useDispatch();
@@ -83,6 +84,7 @@ const SinglePost = () => {
         {/* Related posts */}
         <RelatedPosts relatedPosts={relatedPosts} postId={id} />
       </MDBCard>
+      <DisqusThread id={id} title={post.title} path={`/post/${id}`} />
     </MDBContainer>
   )
 }

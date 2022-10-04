@@ -68,7 +68,7 @@ const Register = () => {
             <div className='col-md-6'>
               <MDBInput 
                 label='firstName'
-                type='firstName'
+                type='text'
                 value={firstName}
                 onChange={onInputChange}
                 name='firstName'
@@ -79,7 +79,7 @@ const Register = () => {
             <div className='col-md-6'>
               <MDBInput 
                 label='lastName'
-                type='lastName'
+                type='text'
                 value={lastName}
                 onChange={onInputChange}
                 name='lastName'

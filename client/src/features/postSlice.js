@@ -105,6 +105,15 @@ export const likePost = createAsyncThunk('post/likePost', async({_id}, {rejectWi
     return rejectWithValue(error.response.data);
   }
 });
+export const commentPost = createAsyncThunk('post/commentPost', async({ id, value }, {rejectWithValue}) => {
+  try {
+    const response = await api.commentPost(id, value);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
 
 
 const postSlice = createSlice({
@@ -248,6 +257,17 @@ const postSlice = createSlice({
 			.addCase(getRelatedPosts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.relatedPosts = action.payload;
+			})
+      .addCase(commentPost.pending, (state) => {
+				// state.isLoading = true;
+			})
+			.addCase(commentPost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.posts = state.posts.map((post) => post._id === action.payload._id ? action.payload : post);
+			})
+			.addCase(commentPost.rejected, (state, action) => {
+				state.isLoading = false;
+        state.error = action.payload.message;
 			});
 	},
 });

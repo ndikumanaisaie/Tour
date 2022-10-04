@@ -156,3 +156,18 @@ export const getRelatedPosts = async (req, res) => {
         res.status(404).json({ message: 'This post does not exist in the database' });
     }
 }
+
+export const commentPost = async (req, res) => {
+    const { id } = req.params;
+    const { value } = req.body;
+    try {
+        const post = await PostModal.findById(id);
+        post.comments.push(value);
+        
+        const updatedPost = await PostModal.findByIdAndUpdate(id, post, { new: true });
+
+        res.status(200).json(updatedPost);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

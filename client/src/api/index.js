@@ -9,9 +9,7 @@ API.interceptors.request.use((req) => {
       JSON.parse(localStorage.getItem('profile')).token
     }`
   }
-
   return req;
-
 });
 
 export const signIn = (formData) => API.post('/users/signin', formData);
@@ -22,6 +20,7 @@ export const createPost = (postData) => API.post('/posts', postData);
 export const getPosts = (page) => API.get(`/posts?page=${page}`);
 export const getPost = (id) => API.get(`/posts/${id}`);
 export const likePost = (id) => API.patch(`/posts/like/${id}`);
+export const commentPost = (id, value) => API.post(`/posts/comments/${id}`, {value});
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const updatePost = (updatedPostData, id) => API.patch(`/posts/${id}`, updatedPostData);
 export const getPostsByUser = (userId) => API.get(`/posts/userPosts/${userId}`);

@@ -10,7 +10,8 @@ import {
   getPostsByUser, 
   getPostsBySearch,
   getPostsByTag,
-  getRelatedPosts, 
+  getRelatedPosts,
+  commentPost, 
 } from '../controllers/posts.js';
 import auth from '../middleware/auth.js';
 
@@ -21,8 +22,9 @@ postRouter.get('/tag/:tag', getPostsByTag);
 postRouter.post('/ralatedPosts', getRelatedPosts);
 postRouter.get('/', getPosts);
 postRouter.get('/:id', getPost);
-postRouter.patch('/like/:id', auth, likePost);
 
+postRouter.patch('/like/:id', auth, likePost);
+postRouter.post('/comments/:id', auth, commentPost);
 postRouter.post('/', auth, createPost);
 postRouter.patch('/:id', auth, updatePost);
 postRouter.delete('/:id', auth, deletePost);

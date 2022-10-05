@@ -1,5 +1,4 @@
 import jwt  from 'jsonwebtoken';
-import UserModel from '../models/user.js'
 
 const secret = 'secret';
 const auth = async (req, res, next) => {
@@ -15,9 +14,6 @@ const auth = async (req, res, next) => {
     } else {
       decodedData = jwt.decode(token);
       req.userId = decodedData?.sub.toString();
-      // const user = UserModel.findOne({ googleId });
-      // req.userId = user?._id;
-      // console.log('googleId: ', req.userId);
     }
 
     next();

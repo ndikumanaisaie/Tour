@@ -21,7 +21,7 @@ const PostCard = ({ imageFile, description, title, tags, _id, name, likes }) => 
   const userId = user?.result?._id || user?.result?.googleId;
 
   const dispatch = useDispatch();
-  console.log(userId);
+  
   const Likes = () => {
     if (likes.length > 0) {
       return likes.find((like) => like === userId) ? (

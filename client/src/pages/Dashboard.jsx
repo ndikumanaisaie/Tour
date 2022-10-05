@@ -26,8 +26,8 @@ import { getPostsByUser, deletePost } from '../features/postSlice';
 const Dashboard = () => {
   const { user } = useSelector((state) => ({ ...state.auth }));
   const { userPosts, isLoading } = useSelector((state) => ({ ...state.posts }));
-  const userId = user?.result?._id;
-
+  const userId = user?.result?._id || user?.result?.googleId;
+  
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -38,11 +38,11 @@ const Login = () => {
 
   useEffect(() => {
     const initClient = () => {
-          gapi.client.init({
+      gapi.auth2.init({
           clientId: clientId,
-          scope: ''
-        });
-     };
+          scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
+      });
+    };
      gapi.load('client:auth2', initClient);
  }, []);
 
@@ -62,9 +62,8 @@ const Login = () => {
     const email = res?.profileObj?.email;
     const name = res?.profileObj?.name;
     const googleId = res?.googleId;
-    const gtoken = res?.tokenId;
-
-    const result = { email, name, googleId, gtoken, };
+    const token = res?.tokenId;
+    const result = { email, name, googleId, token, };
 
     dispatch(googleSignIn({ result, navigate, toast }))
   };

@@ -11,17 +11,17 @@ import {
   MDBTooltip,
 } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import excerpt from '../utilities/index.js'
 import { likePost } from '../features/postSlice.js';
 
 const PostCard = ({ imageFile, description, title, tags, _id, name, likes }) => {
-  const { user } = useSelector((state) => ({...state.auth}));
+  const user = JSON.parse(localStorage.getItem('profile'));
   const userId = user?.result?._id || user?.result?.googleId;
 
   const dispatch = useDispatch();
-
+  console.log(userId);
   const Likes = () => {
     if (likes.length > 0) {
       return likes.find((like) => like === userId) ? (

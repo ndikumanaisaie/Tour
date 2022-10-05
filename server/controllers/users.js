@@ -54,7 +54,7 @@ export const googleSignIn = async (req, res) => {
   try {
     const oldUser = await UserModel.findOne({email});
     if (oldUser){
-      const result = { _id: oldUser._id.toString(), email, name }
+      const result = { _id: oldUser._id.toString(), email, name, googleId }
       return res.status(200).json({ result, token });
     }
 

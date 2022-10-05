@@ -85,9 +85,7 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
     const { id } = req.params;
-
-    console.log('userID: ', req.userId);
-
+    console.log('userId: ', req.userId);
     try {
         if (!req.userId) {
             return res.json({ message: 'User is not authenticated' });
@@ -117,11 +115,10 @@ export const likePost = async (req, res) => {
 }
 export const getPostsByUser = async (req, res) => {
     const { userId } = req.params;
-
+    // console.log('userId', req.params);
     if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({ message: `No post with id: ${userId}`});
     
-    const userPosts = await PostModal.find({ creator: userId });
-    
+    const userPosts = await PostModal.find({ creator: req.userId });
     res.status(200).json(userPosts);
 }
 

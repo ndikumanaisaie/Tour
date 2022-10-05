@@ -14,9 +14,10 @@ const auth = async (req, res, next) => {
       req.userId = decodedData?.id;
     } else {
       decodedData = jwt.decode(token);
-      const googleId = decodedData?.sub.toString();
-      const user = UserModel.findOne({ googleId });
-      req.userId = user?._id;
+      req.userId = decodedData?.sub.toString();
+      // const user = UserModel.findOne({ googleId });
+      // req.userId = user?._id;
+      // console.log('googleId: ', req.userId);
     }
 
     next();

@@ -58,7 +58,7 @@ const CommentSection = ({ post }) => {
         <MDBCardText className='lead mb-0 text-start'>
           {
             comments?.map((c, i) => (
-              <p key={i}>{c}</p>
+              <p key={i}><strong>{c?.split(': ')[0]}</strong>: {c?.split(': ')[1]}</p>
             ))
           }
           <div ref={commentsRef} />

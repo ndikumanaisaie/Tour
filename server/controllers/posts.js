@@ -5,8 +5,6 @@ import PostModal from '../models/posts.js';
 export const getPosts = async (req, res) => { 
     const { page } = req.query;
     try {
-        // const posts = await PostModal.find();   
-        // res.status(200).json(posts);
         const limit = 6;
         const startIndex = (Number(page) -1) * limit;
         const total = await PostModal.countDocuments({});

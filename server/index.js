@@ -14,9 +14,12 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 app.use('/users', userRoute);
 app.use('/posts', postRoute);
+app.get('/', (req, res) => {
+  res.send('APP IS RUNNING');
+});
 
 const  MONGODB_URL = 'mongodb+srv://ndikumana:iza78289@cluster0.a3mnf.mongodb.net/testDb';
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))

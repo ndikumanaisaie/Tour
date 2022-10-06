@@ -17,7 +17,6 @@ const CommentSection = ({ post }) => {
 
   const user = JSON.parse(localStorage.getItem('profile'));
   const id = post._id;
-
   const commentsRef = useRef();
   const dispatch = useDispatch();
 

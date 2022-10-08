@@ -3,10 +3,12 @@ import {
   MDBNavbar,
   MDBContainer,
   MDBIcon,
+  MDBBtn,
   MDBNavbarNav,
   MDBNavbarItem,
   MDBNavbarLink,
   MDBNavbarToggler,
+  MDBInputGroup,
   MDBCollapse,
   MDBNavbarBrand,
 } from 'mdb-react-ui-kit';
@@ -18,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { getPostsBySearch } from '../features/postSlice';
 
 const Header = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [search, setSearch] = useState('');
   const { user } = useSelector((state) => ({ ...state.auth }));
 
@@ -49,7 +51,7 @@ const Header = () => {
   }
 
   return (
-    <MDBNavbar fixed='top' expand='lg' style={{ background: '#f0e6ea' }} >
+    <MDBNavbar fixed='top' expand='lg' light bgColor='light'>
       <MDBContainer>
         <MDBNavbarBrand
           href='/'
@@ -75,11 +77,6 @@ const Header = () => {
                 </h5>
               )
             }
-            <MDBNavbarItem>
-              <MDBNavbarLink href='/'>
-              <p className='header-text'>Home</p>
-              </MDBNavbarLink>
-            </MDBNavbarItem>
             {
               user?.result?._id && (
             <>
@@ -104,11 +101,20 @@ const Header = () => {
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               ) : (
-                <MDBNavbarItem>
+                <>
+                  <MDBNavbarItem>
                   <MDBNavbarLink href='/Login'>
                     <p className='header-text'>Login</p>
                   </MDBNavbarLink>
-                </MDBNavbarItem>
+                  </MDBNavbarItem>
+                  <MDBNavbarItem>
+                  <MDBNavbarLink href='/Register'>
+                  <button type="button" className="btn btn-primary" style={{ marginTop: '12px' }}>
+                    Sign up
+                  </button>
+                  </MDBNavbarLink>
+                  </MDBNavbarItem>
+                </>
               )
             }
           </MDBNavbarNav>
@@ -120,13 +126,41 @@ const Header = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <div style={{ marginTop: '5px', marginLeft: '5px' }}>
-              <MDBIcon fas icon='search' />
-            </div>
+             <MDBBtn outline>Search</MDBBtn>
           </form>
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>
+    // <MDBNavbar expand='lg' light bgColor='light'>
+    //   <MDBContainer fluid>
+    //     <MDBNavbarBrand href='#'>Navbar</MDBNavbarBrand>
+    //     <MDBBtn
+    //       onClick={() => setShow(!show)}
+    //     >
+    //       <MDBIcon icon='bars' fas />
+    //     </MDBBtn>
+    //     <MDBCollapse navbar show={show}>
+    //       <MDBNavbarNav>
+    //         <MDBNavbarItem>
+    //           <MDBNavbarLink active aria-current='page' href='#'>
+    //             Home
+    //           </MDBNavbarLink>
+    //         </MDBNavbarItem>
+    //         <MDBNavbarItem>
+    //           <MDBNavbarLink href='#'>Features</MDBNavbarLink>
+    //         </MDBNavbarItem>
+    //         <MDBNavbarItem>
+    //           <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
+    //         </MDBNavbarItem>
+    //         <MDBNavbarItem>
+    //           <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
+    //             Disabled
+    //           </MDBNavbarLink>
+    //         </MDBNavbarItem>
+    //       </MDBNavbarNav>
+    //     </MDBCollapse>
+    //   </MDBContainer>
+    // </MDBNavbar>
   )
 }
 

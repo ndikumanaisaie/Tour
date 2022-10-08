@@ -40,7 +40,7 @@ const Login = () => {
     const initClient = () => {
       gapi.auth2.init({
           clientId: clientId,
-          scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
+          scope: ''
       });
     };
      gapi.load('client:auth2', initClient);

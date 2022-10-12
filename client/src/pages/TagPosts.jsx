@@ -1,94 +1,96 @@
-import React, { useEffect } from 'react'
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
+import React, { useEffect } from 'react';
 import {
-  MDBCard, 
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
-  MDBCardGroup,
-  MDBBtn,
-  MDBCol,
-  MDBRow,
+	MDBCard,
+	MDBCardBody,
+	MDBCardTitle,
+	MDBCardText,
+	MDBCardImage,
+	MDBCardGroup,
+	MDBBtn,
+	MDBCol,
+	MDBRow,
 } from 'mdb-react-ui-kit';
 
 import { useParams, useNavigate } from 'react-router-dom';
-import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPostsByTag } from '../features/postSlice';
-import excerpt from '../utilities/index.js'
+import Spinner from '../components/Spinner.jsx';
+import { getPostsByTag } from '../features/postSlice.js';
+import excerpt from '../utilities/index.js';
 
 const TagPosts = () => {
-  const { tagPosts, isLoading } = useSelector((state) => ({ ...state.posts}));
-  
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { tag } = useParams();
+	const { tagPosts, isLoading } = useSelector((state) => ({ ...state.posts }));
 
-  useEffect(() => {
-    if (tag) {
-      dispatch(getPostsByTag(tag));
-    }
-  }, [tag, dispatch]);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { tag } = useParams();
 
-  if (isLoading) return <Spinner />
+	useEffect(() => {
+		if (tag) {
+			dispatch(getPostsByTag(tag));
+		}
+	}, [tag, dispatch]);
 
-  return (
-    <div
-      style={{
-        margin: 'auto',
-        padding: '120px',
-        maxWidth: '900px',
-        alignContent: 'center',
-      }}
-    >
-      <h3 className='text-center'>Posts with tag. {tag}</h3>
-      <hr style={{ maxWidth: '570px'}}/>
-      {
-        tagPosts && tagPosts.map((tagPost) => (
-          <MDBCardGroup key={tagPost._id}>
-            <MDBCard style={{ maxWidth: '600px'}} className='mt-2'>
-              <MDBRow className='g-0'>
-                <MDBCol md='4'>
-                  <MDBCardImage 
-                    className='rounded'
-                    src={tagPost.imageFile}
-                    alt={tagPost.title}
-                    fluid
-                  />
-                </MDBCol>
-                <MDBCol md='8'>
-                  <MDBCardBody>
-                    <MDBCardTitle className='text-start'>
-                      {
-                        tagPost.title
-                      }
-                    </MDBCardTitle>
-                    <MDBCardText className='text-start'>
-                      {
-                        excerpt(tagPost.description, 40)
-                      }
-                    </MDBCardText>
-                    <div
-                      style={{ float: 'left', marginTop: '-10px'}}
-                    >
-                      <MDBBtn
-                        size='sm'
-                        rounded
-                        color='info'
-                        onClick={() => navigate(`/post/${tagPost._id}`)}
-                      >
+	if (isLoading) return <Spinner />;
+
+	return (
+		<div
+			style={{
+				margin: 'auto',
+				padding: '120px',
+				maxWidth: '900px',
+				alignContent: 'center',
+			}}
+		>
+			<h3 className='text-center'>Posts with tag. {tag}</h3>
+			<hr style={{ maxWidth: '570px' }}/>
+			{
+				tagPosts && tagPosts.map((tagPost) => (
+					<MDBCardGroup key={tagPost._id}>
+						<MDBCard style={{ maxWidth: '600px' }} className='mt-2'>
+							<MDBRow className='g-0'>
+								<MDBCol md='4'>
+									<MDBCardImage
+										className='rounded'
+										src={tagPost.imageFile}
+										alt={tagPost.title}
+										fluid
+									/>
+								</MDBCol>
+								<MDBCol md='8'>
+									<MDBCardBody>
+										<MDBCardTitle className='text-start'>
+											{
+												tagPost.title
+											}
+										</MDBCardTitle>
+										<MDBCardText className='text-start'>
+											{
+												excerpt(tagPost.description, 40)
+											}
+										</MDBCardText>
+										<div
+											style={{ float: 'left', marginTop: '-10px' }}
+										>
+											<MDBBtn
+												size='sm'
+												rounded
+												color='info'
+												onClick={() => navigate(`/post/${tagPost._id}`)}
+											>
                         Read More
-                      </MDBBtn>
-                    </div>
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>
-            </MDBCard>
-          </MDBCardGroup>
-        ))
-      }
-    </div>
-  )
-}
+											</MDBBtn>
+										</div>
+									</MDBCardBody>
+								</MDBCol>
+							</MDBRow>
+						</MDBCard>
+					</MDBCardGroup>
+				))
+			}
+		</div>
+	);
+};
 
-export default TagPosts
+export default TagPosts;

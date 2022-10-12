@@ -1,5 +1,5 @@
-import express from "express";
-import { signup, signin, googleSignIn } from "../controllers/users.js";
+import express from 'express';
+import { signup, signin, googleSignIn } from '../controllers/users.js';
 
 const router = express.Router();
 

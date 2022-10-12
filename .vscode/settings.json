@@ -2,5 +2,8 @@
   "github.copilot.advanced": {
   
   },
+  "eslint.workingDirectories": [
+    {"mode": "auto"}
+  ],
   "editor.linkedEditing": true
 }

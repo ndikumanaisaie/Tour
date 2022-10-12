@@ -1,62 +1,67 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MDBRow, MDBCol, MDBTypography, MDBContainer } from 'mdb-react-ui-kit';
+import {
+	MDBRow, MDBCol, MDBTypography, MDBContainer,
+} from 'mdb-react-ui-kit';
 
-import PostCard from '../components/PostCard';
-import Spinner from '../components/Spinner';
+import PostCard from '../components/PostCard.jsx';
+import Spinner from '../components/Spinner.jsx';
 
-import { getPosts, setCurrentPage } from '../features/postSlice';
-import Pagination from '../components/Pagination';
+import { getPosts, setCurrentPage } from '../features/postSlice.js';
+import Pagination from '../components/Pagination.jsx';
 
 const Home = () => {
-  const { posts, isLoading, currentPage, numberOfPages } = useSelector((state) => ({ ...state.posts}));
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getPosts(currentPage));
-  }, [dispatch, currentPage]);
-  
-  if (isLoading) {
-    return (
-      <Spinner />
-    );
-  }
+	const {
+		posts, isLoading, currentPage, numberOfPages,
+	} = useSelector((state) => ({ ...state.posts }));
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getPosts(currentPage));
+	}, [dispatch, currentPage]);
 
-  return (
-    <div
-      style={{
-        margin: 'auto',
-        padding: '15px',
-        maxWidth: '1000px',
-        alignContent: 'center',
-      }}
-    >
-      <MDBRow className='mt-5'>
-        {
-          posts.length === 0 && (
-            <MDBTypography className='text-center mb-0' tag='h2' >
+	if (isLoading) {
+		return (
+			<Spinner />
+		);
+	}
+
+	return (
+		<div
+			style={{
+				margin: 'auto',
+				padding: '15px',
+				maxWidth: '1000px',
+				alignContent: 'center',
+			}}
+		>
+			<MDBRow className='mt-5'>
+				{
+					posts.length === 0 && (
+						<MDBTypography className='text-center mb-0' tag='h2' >
               No Tours Found
-            </MDBTypography>
-          )
-        }
+						</MDBTypography>
+					)
+				}
 
-        <MDBCol>
-          <MDBContainer>
-            <MDBRow className='row-cols-md-3 g-2' >
-              {
-                posts && posts?.map((post, i) => <PostCard key={i} { ...post } />)
-              }
-            </MDBRow>
-          </MDBContainer>
-        </MDBCol>
-      </MDBRow>
-      <Pagination 
-        setCurrentPage={setCurrentPage}
-        numberOfPages={numberOfPages}
-        currentPage={currentPage}
-        dispatch={dispatch}
-      />
-    </div>
-  )
-}
+				<MDBCol>
+					<MDBContainer>
+						<MDBRow className='row-cols-md-3 g-2' >
+							{
+								posts && posts?.map((post, i) => <PostCard key={i} { ...post } />)
+							}
+						</MDBRow>
+					</MDBContainer>
+				</MDBCol>
+			</MDBRow>
+			<Pagination
+				setCurrentPage={setCurrentPage}
+				numberOfPages={numberOfPages}
+				currentPage={currentPage}
+				dispatch={dispatch}
+			/>
+		</div>
+	);
+};
 
-export default Home
+export default Home;

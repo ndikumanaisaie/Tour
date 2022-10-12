@@ -1,17 +1,17 @@
 import express from 'express';
 
 import {
-  getPosts,
-  getPost, 
-  createPost, 
-  updatePost, 
-  likePost, 
-  deletePost, 
-  getPostsByUser, 
-  getPostsBySearch,
-  getPostsByTag,
-  getRelatedPosts,
-  commentPost, 
+	getPosts,
+	getPost,
+	createPost,
+	updatePost,
+	likePost,
+	deletePost,
+	getPostsByUser,
+	getPostsBySearch,
+	getPostsByTag,
+	getRelatedPosts,
+	commentPost,
 } from '../controllers/posts.js';
 import auth from '../middleware/auth.js';
 

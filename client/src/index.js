@@ -6,7 +6,11 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import './index.css'
+// Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+// Bootstrap Bundle JS
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import './index.css';
 import App from './App.js';
 import authReducer from './features/authSlice.js';
 import postReducer from './features/postSlice.js';

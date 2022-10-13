@@ -9,9 +9,14 @@
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
+    "sourceType": "module",
+   " requireConfigFile": false
   },
-  "extends": ["airbnb-base"],
+
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended"
+  ],
   "rules": {
     "no-shadow": "off",
     "no-param-reassign": "off",
@@ -24,10 +29,6 @@
     "no-tabs": 0,
     "no-mixed-spaces-and-tabs": 0
   },
-  "ignorePatterns": [
-    "dist/",
-    "build/"
-  ],
   "overrides": [
     {
       "files": ["*.jsx", "*.js"]

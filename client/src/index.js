@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -7,6 +6,10 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+// Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+// Bootstrap Bundle JS
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css';
 import App from './App.js';
 import authReducer from './features/authSlice.js';

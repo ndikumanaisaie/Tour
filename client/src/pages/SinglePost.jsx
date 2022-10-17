@@ -7,10 +7,11 @@ import {
 	MDBCardImage,
 	MDBContainer,
 	MDBIcon,
+	MDBBtn,
 } from 'mdb-react-ui-kit';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import RelatedPosts from '../components/RelatedPosts.jsx';
 
@@ -19,9 +20,10 @@ import { getPost, getRelatedPosts } from '../features/postSlice.js';
 import CommentSection from '../components/CommentSection.jsx';
 
 const SinglePost = () => {
-	const dispatch = useDispatch();
 	const { post, relatedPosts, isLoading } = useSelector((state) => ({ ...state.posts }));
 	const { id } = useParams();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const tags = post?.tags;
 
@@ -51,6 +53,19 @@ const SinglePost = () => {
 					alt={post.title}
 				/>
 				<MDBCardBody>
+					<MDBBtn
+						tag='a'
+						color='none'
+						style={{ float: 'left', color: '#000' }}
+						onClick={() => navigate('/')}
+					>
+						<MDBIcon
+							fas
+							size='lg'
+							icon='long-arrow-alt-left'
+							style={{ float: 'left' }}
+						/>
+					</MDBBtn>
 					<h3>{post?.title}</h3>
 					<span>
 						<p className='text-start post-name'>Created by: {post.name}</p>

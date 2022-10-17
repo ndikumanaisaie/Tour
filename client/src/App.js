@@ -17,6 +17,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import NotFound from './pages/NotFound.jsx';
 import TagPosts from './pages/TagPosts.jsx';
+import ReactBootstrapNav from './components/ReactBootstrapNav.jsx';
 
 const App = () => {
 	const [activeMenu, setActiveMenu] = useState(true);

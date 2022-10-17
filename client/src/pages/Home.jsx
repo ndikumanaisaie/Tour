@@ -31,11 +31,11 @@ const Home = () => {
 			style={{
 				margin: 'auto',
 				padding: '15px',
-				maxWidth: '1000px',
+				maxWidth: '100%',
 				alignContent: 'center',
 			}}
 		>
-			<MDBRow className='mt-5'>
+			<MDBRow className='mt-4'>
 				{
 					posts.length === 0 && (
 						<MDBTypography className='text-center mb-0' tag='h2' >
@@ -45,7 +45,7 @@ const Home = () => {
 				}
 
 				<MDBCol>
-					<MDBContainer>
+					<MDBContainer fluid>
 						<MDBRow className='row-cols-md-3 g-2' >
 							{
 								posts && posts?.map((post, i) => <PostCard key={i} { ...post } />)

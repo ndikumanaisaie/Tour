@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
 	MDBRow, MDBCol, MDBTypography, MDBContainer,
 } from 'mdb-react-ui-kit';
@@ -11,11 +12,18 @@ import Spinner from '../components/Spinner.jsx';
 import { getPosts, setCurrentPage } from '../features/postSlice.js';
 import Pagination from '../components/Pagination.jsx';
 
+const useQuery = () => new URLSearchParams(useLocation().search);
+
 const Home = () => {
 	const {
 		posts, isLoading, currentPage, numberOfPages,
 	} = useSelector((state) => ({ ...state.posts }));
+
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const query = useQuery();
+	const searchQuery = query.get('searchQuery');
+
 	useEffect(() => {
 		dispatch(getPosts(currentPage));
 	}, [dispatch, currentPage]);
@@ -37,9 +45,16 @@ const Home = () => {
 		>
 			<MDBRow className='mt-4'>
 				{
-					posts.length === 0 && (
+					posts.length === 0 && location.pathname === '/' && (
 						<MDBTypography className='text-center mb-0' tag='h2' >
-              No Tours Found
+              No posts Found
+						</MDBTypography>
+					)
+				}
+				{
+					posts.length === 0 && location.pathname !== '/' && (
+						<MDBTypography className='text-center mb-0' tag='h2' >
+              We couldn&apos;t find any match with &rdquo;{searchQuery}&rdquo;
 						</MDBTypography>
 					)
 				}
@@ -54,12 +69,16 @@ const Home = () => {
 					</MDBContainer>
 				</MDBCol>
 			</MDBRow>
-			<Pagination
-				setCurrentPage={setCurrentPage}
-				numberOfPages={numberOfPages}
-				currentPage={currentPage}
-				dispatch={dispatch}
-			/>
+			{
+				posts.length > 0 && (
+					<Pagination
+						setCurrentPage={setCurrentPage}
+						numberOfPages={numberOfPages}
+						currentPage={currentPage}
+						dispatch={dispatch}
+					/>
+				)
+			}
 		</div>
 	);
 };

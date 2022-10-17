@@ -57,8 +57,21 @@ const Dashboard = () => {
 				alignContent: 'center',
 			}}
 		>
-			<h4 className='text-center'>Dashboard: {user?.result?.name}</h4>
-			<hr style={{ maxWidth: '570px' }} />
+			{
+				userPosts?.length === 0 && (
+					<h5>You have no post yet</h5>
+				)
+			}
+
+			{
+				userPosts?.length > 0 && (
+					<>
+						<h4 className='text-center'>Dashboard: {user?.result?.name}</h4>
+						<hr style={{ maxWidth: '570px' }} />
+					</>
+				)
+			}
+
 			{
 				userPosts && userPosts.map((userPost) => (
 					<MDBCardGroup key={userPost._id}>

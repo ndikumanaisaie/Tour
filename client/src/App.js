@@ -17,32 +17,10 @@ import Dashboard from './pages/Dashboard.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import NotFound from './pages/NotFound.jsx';
 import TagPosts from './pages/TagPosts.jsx';
-import ReactBootstrapNav from './components/ReactBootstrapNav.jsx';
 
 const App = () => {
-	const [activeMenu, setActiveMenu] = useState(true);
-	const [screenSize, setScreenSize] = useState(null);
-
 	const dispatch = useDispatch();
 	const user = JSON.parse(localStorage.getItem('profile'));
-
-	useEffect(() => {
-		const handleResize = () => setScreenSize(window.innerWidth);
-
-		window.addEventListener('resize', handleResize);
-
-		handleResize();
-
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
-
-	useEffect(() => {
-		if (screenSize < 768) {
-			setActiveMenu(false);
-		} else {
-			setActiveMenu(true);
-		}
-	}, [screenSize]);
 
 	useEffect(() => {
 		dispatch(setUser(user));
@@ -50,7 +28,6 @@ const App = () => {
 
 	return (
 		<div className='app' id="outer-container">
-			 {/* <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} /> */}
 			 <div id="page-wrap">
 				<Header />
 				<ToastContainer />

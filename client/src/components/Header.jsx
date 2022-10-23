@@ -52,8 +52,8 @@ const Header = () => {
 		<Navbar bg="light" expand="lg">
 			<Container fluid>
 				<Navbar.Brand href="/">Memories</Navbar.Brand>
-				<Navbar.Toggle aria-controls="navbarScroll" />
-				<Navbar.Collapse id="navbarScroll">
+				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+				<Navbar.Collapse id="responsive-navbar-nav">
 					<Nav
 						className="me-auto my-2 my-lg-0"
 						style={{ maxHeight: '100px' }}
@@ -63,9 +63,8 @@ const Header = () => {
 							user?.result?._id && (
 								<>
 									<Nav.Link href="#action1">
-										<div>
-											<span className='header-text'> {firstCharacter(user?.result?.name).toUpperCase()} </span>
-										</div>
+										<MDBIcon fas icon='user-circle' className='fa-2x'/>
+										<span className='header-text'> {firstCharacter(user?.result?.name).toUpperCase()} </span>
 									</Nav.Link>
 									<Nav.Link href="/Post">
 										<span className='header-text'> Create Post </span>

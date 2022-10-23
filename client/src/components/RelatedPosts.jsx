@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import {
 	MDBCard,

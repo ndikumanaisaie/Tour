@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
+
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import {

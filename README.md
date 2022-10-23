@@ -4,7 +4,7 @@
 
 > This is a fullstack web application designed using MERN stack. In this applications users can create accounts, login with their custom credentials or using google account. In additional to that, users can create posts, like posts and comment on others's posts. 
 ## Below is the screenshot of my work
-![tour](https://github.com/ndikumanaisaie/cryptoproject/blob/develop/src/images/shot_1.png)
+![tour](https://github.com/ndikumanaisaie/Tour/blob/develop/client/src/images/shot.png)
 
 ## Built with
 - Javascript

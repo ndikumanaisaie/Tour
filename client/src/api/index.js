@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://toursapplication.herokuapp.com/' });
+const API = axios.create({ baseURL: 'http://localhost:5000' });
 
 API.interceptors.request.use((req) => {
 	if (localStorage.getItem('profile')) {
